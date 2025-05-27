@@ -206,21 +206,58 @@
             .tech-grid { gap: 20px; }
         }
         
-        /* Loading overlay for iframes */
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #000;
+        /* Demo placeholder styles */
+        .demo-placeholder {
+            height: 100%;
+            background: #111;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
+            border: 1px solid #333;
+        }
+        
+        .placeholder-content {
+            text-align: center;
+            padding: 40px;
+            max-width: 400px;
+        }
+        
+        .placeholder-content h4 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .placeholder-content p {
+            color: #999;
+            margin-bottom: 20px;
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        }
+        
+        .placeholder-features {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .placeholder-features div {
+            color: #ccc;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .placeholder-note {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border: 1px solid #333;
+            font-size: 0.8rem;
+            color: #999;
+            line-height: 1.4;
+        }
+        
+        .placeholder-note strong {
+            color: #fff;
         }
     </style>
 </head>
@@ -269,192 +306,21 @@
                         <p>C++ console application for rocket engine sensor validation</p>
                     </div>
                     <div class="project-demo">
-                        <div class="loading-overlay">Loading Demo...</div>
-                        <iframe 
-                            class="demo-frame" 
-                            src="data:text/html;charset=utf-8,<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Test Stand Demo</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Courier New', monospace; 
-            background: #000;
-            color: #00ff00; 
-            padding: 20px;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .mini-container { height: 100%; display: flex; flex-direction: column; }
-        .mini-controls { 
-            display: flex; 
-            gap: 10px; 
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        .mini-btn { 
-            background: #333; 
-            color: #00ff00; 
-            border: 1px solid #555; 
-            padding: 8px 12px; 
-            font-family: inherit;
-            font-size: 12px;
-            cursor: pointer; 
-            transition: all 0.2s;
-        }
-        .mini-btn:hover { background: #555; }
-        .mini-btn:disabled { background: #222; color: #666; cursor: not-allowed; }
-        .mini-stats { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 10px; 
-            margin-bottom: 15px;
-        }
-        .mini-stat { 
-            text-align: center; 
-            padding: 8px; 
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #333;
-            font-size: 11px;
-        }
-        .mini-stat-value { font-size: 14px; font-weight: bold; margin-bottom: 3px; }
-        .mini-terminal { 
-            background: #111; 
-            border: 1px solid #333; 
-            padding: 15px; 
-            flex: 1;
-            overflow-y: auto;
-            font-size: 11px;
-            line-height: 1.4;
-        }
-    </style>
-</head>
-<body>
-    <div class='mini-container'>
-        <div class='mini-controls'>
-            <button class='mini-btn' onclick='generateData()'>Generate Data</button>
-            <button class='mini-btn' onclick='runValidation()'>Run Validation</button>
-            <button class='mini-btn' onclick='resetSystem()'>Reset</button>
-        </div>
-        
-        <div class='mini-stats'>
-            <div class='mini-stat'>
-                <div class='mini-stat-value' id='validCount'>-</div>
-                <div>Valid</div>
-            </div>
-            <div class='mini-stat'>
-                <div class='mini-stat-value' id='totalCount'>-</div>
-                <div>Total</div>
-            </div>
-            <div class='mini-stat'>
-                <div class='mini-stat-value' id='anomalyCount'>-</div>
-                <div>Anomalies</div>
-            </div>
-            <div class='mini-stat'>
-                <div class='mini-stat-value' id='avgTemp'>-</div>
-                <div>Avg °C</div>
-            </div>
-        </div>
-        
-        <div class='mini-terminal' id='output'>Test Stand Automation Tool v1.0
-Ready for sensor data validation...
-
-Thresholds:
-- Temperature: 0-100°C
-- Pressure: 0-5 bar  
-- Thrust: 0-2000 kN
-
-Generate sample data to begin testing.</div>
-    </div>
-
-    <script>
-        let sensorData = [];
-        let validationResults = [];
-
-        function log(msg) {
-            const output = document.getElementById('output');
-            output.textContent += '\\n' + msg;
-            output.scrollTop = output.scrollHeight;
-        }
-
-        function generateData() {
-            log('> Generating 100 sensor readings...');
-            sensorData = [];
-            
-            for (let i = 0; i < 100; i++) {
-                const anomaly = Math.random() < 0.05;
-                let temp = anomaly ? 110 + Math.random() * 40 : Math.max(0, Math.min(100, 50 + (Math.random() - 0.5) * 30));
-                let pressure = anomaly ? 6 + Math.random() * 2 : Math.max(0, Math.min(5, 3 + (Math.random() - 0.5) * 2));
-                let thrust = anomaly ? 2100 + Math.random() * 400 : Math.max(0, Math.min(2000, 1000 + (Math.random() - 0.5) * 400));
-                
-                sensorData.push({
-                    temperature: parseFloat(temp.toFixed(1)),
-                    pressure: parseFloat(pressure.toFixed(1)),
-                    thrust: parseFloat(thrust.toFixed(1))
-                });
-            }
-            
-            log('✓ Generated ' + sensorData.length + ' sensor readings');
-            document.getElementById('totalCount').textContent = sensorData.length;
-        }
-
-        function runValidation() {
-            if (sensorData.length === 0) {
-                log('⚠ No data to validate');
-                return;
-            }
-
-            log('> Starting validation...');
-            
-            let validCount = 0, anomalyCount = 0;
-            let tempSum = 0, pressureSum = 0, thrustSum = 0;
-
-            sensorData.forEach(data => {
-                const tempValid = data.temperature >= 0 && data.temperature <= 100;
-                const pressureValid = data.pressure >= 0 && data.pressure <= 5;
-                const thrustValid = data.thrust >= 0 && data.thrust <= 2000;
-                const isValid = tempValid && pressureValid && thrustValid;
-                
-                if (isValid) validCount++;
-                else anomalyCount++;
-                
-                tempSum += data.temperature;
-                pressureSum += data.pressure;
-                thrustSum += data.thrust;
-            });
-
-            document.getElementById('validCount').textContent = validCount;
-            document.getElementById('anomalyCount').textContent = anomalyCount;
-            document.getElementById('avgTemp').textContent = (tempSum / sensorData.length).toFixed(1);
-
-            log('✓ Validation complete');
-            log('Test Report:');
-            log(validCount + '/' + sensorData.length + ' sensors valid');
-            log('Avg Temp: ' + (tempSum / sensorData.length).toFixed(2) + ' °C');
-            log('Avg Pressure: ' + (pressureSum / sensorData.length).toFixed(3) + ' bar');
-            log('Avg Thrust: ' + (thrustSum / sensorData.length).toFixed(2) + ' kN');
-            log('Anomalies: ' + anomalyCount);
-        }
-
-        function resetSystem() {
-            log('> Resetting test stand...');
-            sensorData = [];
-            validationResults = [];
-            
-            ['validCount', 'totalCount', 'anomalyCount', 'avgTemp'].forEach(id => {
-                document.getElementById(id).textContent = '-';
-            });
-            
-            log('✓ Reset complete, ready for new test run');
-        }
-    </script>
-</body>
-</html>"
-                            onload="this.previousElementSibling.style.display='none'">
-                        </iframe>
+                        <div class="demo-placeholder">
+                            <div class="placeholder-content">
+                                <h4>🚀 Test Stand Automation Tool Demo</h4>
+                                <p>Interactive C++ console simulation</p>
+                                <div class="placeholder-features">
+                                    <div>• CSV data processing</div>
+                                    <div>• Parallel validation</div>
+                                    <div>• Real-time reporting</div>
+                                    <div>• Safety thresholds</div>
+                                </div>
+                                <div class="placeholder-note">
+                                    <strong>Demo Features:</strong> Generate sensor data, validate thresholds, view results in terminal interface
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -465,67 +331,22 @@ Generate sample data to begin testing.</div>
                         <p>Real-time engine monitoring with safety protocols</p>
                     </div>
                     <div class="project-demo">
-                        <div class="loading-overlay">Loading Demo...</div>
-                        <iframe 
-                            class="demo-frame" 
-                            src="data:text/html;charset=utf-8,<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Rocket Simulator Demo</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Courier New', monospace; 
-            background: #000;
-            color: #00ff00; 
-            padding: 20px;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .mini-container { height: 100%; display: flex; flex-direction: column; }
-        .mini-controls { 
-            display: flex; 
-            gap: 8px; 
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        .mini-btn { 
-            background: #333; 
-            color: #00ff00; 
-            border: 1px solid #555; 
-            padding: 6px 10px; 
-            font-family: inherit;
-            font-size: 11px;
-            cursor: pointer; 
-            transition: all 0.2s;
-        }
-        .mini-btn:hover { background: #555; }
-        .mini-btn:disabled { background: #222; color: #666; }
-        .mini-btn.danger { background: #660000; color: #ff6666; }
-        .mini-btn.danger:hover { background: #880000; }
-        .mini-status { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 8px; 
-            margin-bottom: 15px;
-        }
-        .mini-stat { 
-            text-align: center; 
-            padding: 6px; 
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #333;
-            font-size: 10px;
-        }
-        .mini-stat-value { font-size: 12px; font-weight: bold; margin-bottom: 2px; }
-        .safe { color: #51cf66; }
-        .warning { color: #ffd43b; }
-        .danger { color: #ff6b6b; }
-        .mini-terminal { 
-            background: #111; 
-            border: 1px solid #333; 
-            padding: 12px; 
+                        <div class="demo-placeholder">
+                            <div class="placeholder-content">
+                                <h4>🚀 Rocket Test Simulator Demo</h4>
+                                <p>Real-time engine monitoring simulation</p>
+                                <div class="placeholder-features">
+                                    <div>• Live sensor readings</div>
+                                    <div>• Safety monitoring</div>
+                                    <div>• Emergency protocols</div>
+                                    <div>• Real-time alerts</div>
+                                </div>
+                                <div class="placeholder-note">
+                                    <strong>Demo Features:</strong> Start test sequence, monitor telemetry, trigger safety systems
+                                </div>
+                            </div>
+                        </div>
+                    </div> 12px; 
             flex: 1;
             overflow-y: auto;
             font-size: 10px;
