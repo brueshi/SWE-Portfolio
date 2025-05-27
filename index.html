@@ -141,71 +141,6 @@
             border-top: 1px solid #333;
         }
         
-        .demo-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #000;
-        }
-        
-        /* Tech Stack */
-        .tech-stack {
-            text-align: center;
-            padding: 60px 0;
-        }
-        
-        .tech-stack h3 {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 30px;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .tech-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .tech-item {
-            color: #999;
-            font-size: 0.9rem;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Footer */
-        .footer {
-            padding: 60px 0;
-            text-align: center;
-            border-top: 1px solid #333;
-            margin-top: 80px;
-        }
-        
-        .footer p {
-            color: #666;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container { padding: 0 20px; }
-            .header h1 { font-size: 2.5rem; }
-            .projects-grid { 
-                grid-template-columns: 1fr; 
-                gap: 40px; 
-            }
-            .project-demo { height: 500px; }
-            .about-grid { gap: 30px; }
-            .tech-grid { gap: 20px; }
-        }
-        
         /* Demo styles */
         .demo-container {
             height: 100%;
@@ -293,6 +228,64 @@
         .safe { color: #51cf66; }
         .warning { color: #ffd43b; }
         .danger { color: #ff6b6b; }
+        
+        /* Tech Stack */
+        .tech-stack {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .tech-stack h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .tech-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-item {
+            color: #999;
+            font-size: 0.9rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid #333;
+            margin-top: 80px;
+        }
+        
+        .footer p {
+            color: #666;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            .header h1 { font-size: 2.5rem; }
+            .projects-grid { 
+                grid-template-columns: 1fr; 
+                gap: 40px; 
+            }
+            .project-demo { height: 500px; }
+            .about-grid { gap: 30px; }
+            .tech-grid { gap: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -342,9 +335,9 @@
                     <div class="project-demo">
                         <div class="demo-container" id="testStandDemo">
                             <div class="demo-controls">
-                                <button class="demo-btn" onclick="generateTestData()">Generate Data</button>
-                                <button class="demo-btn" onclick="runTestValidation()">Run Validation</button>
-                                <button class="demo-btn" onclick="resetTestSystem()">Reset</button>
+                                <button class="demo-btn" onclick="testStand.generateData()">Generate Data</button>
+                                <button class="demo-btn" onclick="testStand.runValidation()">Run Validation</button>
+                                <button class="demo-btn" onclick="testStand.reset()">Reset</button>
                             </div>
                             
                             <div class="demo-stats">
@@ -388,10 +381,10 @@ Generate sample data to begin testing.</div>
                     <div class="project-demo">
                         <div class="demo-container" id="rocketSimDemo">
                             <div class="demo-controls">
-                                <button class="demo-btn" id="rocketStartBtn" onclick="startRocketTest()">🚀 Start</button>
-                                <button class="demo-btn" id="rocketStopBtn" onclick="stopRocketTest()" disabled>⏹️ Stop</button>
-                                <button class="demo-btn danger" id="rocketEmergencyBtn" onclick="emergencyRocketStop()" disabled>🚨 Emergency</button>
-                                <button class="demo-btn" onclick="resetRocketTest()">🔄 Reset</button>
+                                <button class="demo-btn" id="rocketStartBtn" onclick="rocketSim.start()">🚀 Start</button>
+                                <button class="demo-btn" id="rocketStopBtn" onclick="rocketSim.stop()" disabled>⏹️ Stop</button>
+                                <button class="demo-btn danger" id="rocketEmergencyBtn" onclick="rocketSim.emergencyStop()" disabled>🚨 Emergency</button>
+                                <button class="demo-btn" onclick="rocketSim.reset()">🔄 Reset</button>
                             </div>
                             
                             <div class="demo-stats">
@@ -423,183 +416,8 @@ Safety thresholds:
 - Pressure: 0-5.0 bar
 - Thrust: 500-3000 N
 
-Press Start to begin simulation...
-                            </div>
+Press Start to begin simulation...</div>
                         </div>
-                    </div> 12px; 
-            flex: 1;
-            overflow-y: auto;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .reading-count { 
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-            background: rgba(0, 204, 255, 0.2);
-            padding: 4px 8px;
-            font-size: 10px;
-            color: #00ccff;
-        }
-    </style>
-</head>
-<body>
-    <div class='mini-container'>
-        <div class='mini-controls'>
-            <button class='mini-btn' id='startBtn' onclick='startTest()'>🚀 Start</button>
-            <button class='mini-btn' id='stopBtn' onclick='stopTest()' disabled>⏹️ Stop</button>
-            <button class='mini-btn danger' id='emergencyBtn' onclick='emergencyStop()' disabled>🚨 Emergency</button>
-            <button class='mini-btn' onclick='resetTest()'>🔄 Reset</button>
-        </div>
-        
-        <div class='mini-status'>
-            <div class='mini-stat'>
-                <div class='mini-stat-value safe' id='tempValue'>25.0</div>
-                <div>Temp (°C)</div>
-            </div>
-            <div class='mini-stat'>
-                <div class='mini-stat-value safe' id='pressureValue'>1.0</div>
-                <div>Pressure</div>
-            </div>
-            <div class='mini-stat'>
-                <div class='mini-stat-value safe' id='thrustValue'>0</div>
-                <div>Thrust (N)</div>
-            </div>
-            <div class='mini-stat'>
-                <div class='mini-stat-value safe' id='statusValue'>READY</div>
-                <div>Status</div>
-            </div>
-        </div>
-        
-        <div class='mini-terminal' id='output' style='position: relative;'>
-            <div class='reading-count' id='readingCount'>Reading: 0</div>
-Rocket Test Simulator v1.0
-System ready for testing.
-
-Safety thresholds:
-- Temperature: 0-100°C  
-- Pressure: 0-5.0 bar
-- Thrust: 500-3000 N
-
-Press Start to begin simulation...
-        </div>
-    </div>
-
-    <script>
-        let isRunning = false;
-        let readingCount = 0;
-        let interval;
-
-        function log(msg) {
-            const output = document.getElementById('output');
-            const timestamp = new Date().toLocaleTimeString();
-            output.textContent += '\\n[' + timestamp + '] ' + msg;
-            output.scrollTop = output.scrollHeight;
-        }
-
-        function updateDisplay(temp, pressure, thrust, status) {
-            document.getElementById('tempValue').textContent = temp.toFixed(1);
-            document.getElementById('pressureValue').textContent = pressure.toFixed(1);
-            document.getElementById('thrustValue').textContent = Math.round(thrust);
-            document.getElementById('statusValue').textContent = status;
-            document.getElementById('readingCount').textContent = 'Reading: ' + readingCount;
-            
-            const tempEl = document.getElementById('tempValue');
-            const pressureEl = document.getElementById('pressureValue');
-            const thrustEl = document.getElementById('thrustValue');
-            const statusEl = document.getElementById('statusValue');
-            
-            tempEl.className = 'mini-stat-value ' + (temp > 100 ? 'danger' : 'safe');
-            pressureEl.className = 'mini-stat-value ' + (pressure > 5 ? 'danger' : 'safe');
-            thrustEl.className = 'mini-stat-value ' + ((thrust < 500 || thrust > 3000) ? 'warning' : 'safe');
-            statusEl.className = 'mini-stat-value ' + (status.includes('ALERT') ? 'danger' : 'safe');
-        }
-
-        function generateReading() {
-            const temp = 20 + Math.random() * 80 + (Math.random() < 0.05 ? 20 + Math.random() * 30 : 0);
-            const pressure = 1 + Math.random() * 4 + (Math.random() < 0.05 ? 1 + Math.random() * 3 : 0);
-            const thrust = 800 + Math.random() * 1500 + (Math.random() < 0.05 ? (Math.random() > 0.5 ? 1000 : -400) : 0);
-            return { temp, pressure, thrust };
-        }
-
-        function checkSafety(temp, pressure, thrust) {
-            const issues = [];
-            if (temp > 100) issues.push('OVERHEATING');
-            if (pressure > 5) issues.push('OVERPRESSURE');
-            if (thrust < 500 || thrust > 3000) issues.push('THRUST_ANOMALY');
-            return issues;
-        }
-
-        function runStep() {
-            if (!isRunning) return;
-            
-            readingCount++;
-            const { temp, pressure, thrust } = generateReading();
-            const issues = checkSafety(temp, pressure, thrust);
-            let status = 'NOMINAL';
-            
-            if (issues.length > 0) {
-                status = 'ALERT: ' + issues.join(', ');
-                if (issues.includes('OVERHEATING')) {
-                    log('🔥 ALERT: Overheating! Temp: ' + temp.toFixed(1) + '°C');
-                }
-                if (issues.includes('OVERPRESSURE')) {
-                    log('💥 ALERT: Overpressure! Pressure: ' + pressure.toFixed(1) + ' bar');
-                }
-                if (temp > 120 || pressure > 7) {
-                    log('🚨 CRITICAL - Emergency stop initiated');
-                    emergencyStop();
-                    return;
-                }
-            }
-            
-            updateDisplay(temp, pressure, thrust, status);
-            log('Reading ' + readingCount + ': ' + temp.toFixed(1) + '°C, ' + pressure.toFixed(1) + ' bar, ' + thrust.toFixed(0) + ' N' + (status !== 'NOMINAL' ? ' - ' + status : ''));
-        }
-
-        function startTest() {
-            isRunning = true;
-            readingCount = 0;
-            document.getElementById('startBtn').disabled = true;
-            document.getElementById('stopBtn').disabled = false;
-            document.getElementById('emergencyBtn').disabled = false;
-            
-            log('🚀 Starting rocket test simulation...');
-            interval = setInterval(runStep, 1000);
-        }
-
-        function stopTest() {
-            isRunning = false;
-            clearInterval(interval);
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('stopBtn').disabled = true;
-            document.getElementById('emergencyBtn').disabled = true;
-            
-            log('⏹️ Test stopped. Readings: ' + readingCount);
-        }
-
-        function emergencyStop() {
-            isRunning = false;
-            clearInterval(interval);
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('stopBtn').disabled = true;
-            document.getElementById('emergencyBtn').disabled = true;
-            
-            log('🚨 EMERGENCY STOP ACTIVATED');
-            log('⚠️ All systems shut down for safety');
-        }
-
-        function resetTest() {
-            stopTest();
-            readingCount = 0;
-            updateDisplay(25, 1.0, 0, 'READY');
-            document.getElementById('output').textContent = 'Rocket Test Simulator v1.0\\nSystem reset and ready.\\n\\nSafety thresholds:\\n- Temperature: 0-100°C\\n- Pressure: 0-5.0 bar\\n- Thrust: 500-3000 N\\n\\nPress Start to begin simulation...';
-        }
-    </script>
-</body>
-</html>"
-                            onload="this.previousElementSibling.style.display='none'">
-                        </iframe>
                     </div>
                 </div>
             </div>
@@ -625,195 +443,199 @@ Press Start to begin simulation...
     </div>
 
     <script>
-        // Test Stand Demo JavaScript
-        let testSensorData = [];
-        
-        function logTest(msg) {
-            const output = document.getElementById('testOutput');
-            output.textContent += '\n' + msg;
-            output.scrollTop = output.scrollHeight;
-        }
-
-        function generateTestData() {
-            logTest('> Generating 100 sensor readings...');
-            testSensorData = [];
+        // Test Stand Demo Module
+        const testStand = {
+            sensorData: [],
             
-            for (let i = 0; i < 100; i++) {
-                const anomaly = Math.random() < 0.05;
-                let temp = anomaly ? 110 + Math.random() * 40 : Math.max(0, Math.min(100, 50 + (Math.random() - 0.5) * 30));
-                let pressure = anomaly ? 6 + Math.random() * 2 : Math.max(0, Math.min(5, 3 + (Math.random() - 0.5) * 2));
-                let thrust = anomaly ? 2100 + Math.random() * 400 : Math.max(0, Math.min(2000, 1000 + (Math.random() - 0.5) * 400));
+            log(msg) {
+                const output = document.getElementById('testOutput');
+                output.textContent += '\n' + msg;
+                output.scrollTop = output.scrollHeight;
+            },
+
+            generateData() {
+                this.log('> Generating 100 sensor readings...');
+                this.sensorData = [];
                 
-                testSensorData.push({
-                    temperature: parseFloat(temp.toFixed(1)),
-                    pressure: parseFloat(pressure.toFixed(1)),
-                    thrust: parseFloat(thrust.toFixed(1))
-                });
-            }
-            
-            logTest('✓ Generated ' + testSensorData.length + ' sensor readings');
-            document.getElementById('testTotalCount').textContent = testSensorData.length;
-        }
-
-        function runTestValidation() {
-            if (testSensorData.length === 0) {
-                logTest('⚠ No data to validate');
-                return;
-            }
-
-            logTest('> Starting validation...');
-            
-            let validCount = 0, anomalyCount = 0;
-            let tempSum = 0, pressureSum = 0, thrustSum = 0;
-
-            testSensorData.forEach(data => {
-                const tempValid = data.temperature >= 0 && data.temperature <= 100;
-                const pressureValid = data.pressure >= 0 && data.pressure <= 5;
-                const thrustValid = data.thrust >= 0 && data.thrust <= 2000;
-                const isValid = tempValid && pressureValid && thrustValid;
-                
-                if (isValid) validCount++;
-                else anomalyCount++;
-                
-                tempSum += data.temperature;
-                pressureSum += data.pressure;
-                thrustSum += data.thrust;
-            });
-
-            document.getElementById('testValidCount').textContent = validCount;
-            document.getElementById('testAnomalyCount').textContent = anomalyCount;
-            document.getElementById('testAvgTemp').textContent = (tempSum / testSensorData.length).toFixed(1);
-
-            logTest('✓ Validation complete');
-            logTest('Test Report:');
-            logTest(validCount + '/' + testSensorData.length + ' sensors valid');
-            logTest('Avg Temp: ' + (tempSum / testSensorData.length).toFixed(2) + ' °C');
-            logTest('Avg Pressure: ' + (pressureSum / testSensorData.length).toFixed(3) + ' bar');
-            logTest('Avg Thrust: ' + (thrustSum / testSensorData.length).toFixed(2) + ' kN');
-            logTest('Anomalies: ' + anomalyCount);
-        }
-
-        function resetTestSystem() {
-            logTest('> Resetting test stand...');
-            testSensorData = [];
-            
-            ['testValidCount', 'testTotalCount', 'testAnomalyCount', 'testAvgTemp'].forEach(id => {
-                document.getElementById(id).textContent = '-';
-            });
-            
-            logTest('✓ Reset complete, ready for new test run');
-        }
-
-        // Rocket Simulator Demo JavaScript
-        let rocketIsRunning = false;
-        let rocketReadingCount = 0;
-        let rocketInterval;
-
-        function logRocket(msg) {
-            const output = document.getElementById('rocketOutput');
-            const timestamp = new Date().toLocaleTimeString();
-            output.textContent += '\n[' + timestamp + '] ' + msg;
-            output.scrollTop = output.scrollHeight;
-        }
-
-        function updateRocketDisplay(temp, pressure, thrust, status) {
-            document.getElementById('rocketTempValue').textContent = temp.toFixed(1);
-            document.getElementById('rocketPressureValue').textContent = pressure.toFixed(1);
-            document.getElementById('rocketThrustValue').textContent = Math.round(thrust);
-            document.getElementById('rocketStatusValue').textContent = status;
-            document.getElementById('rocketReadingCount').textContent = 'Reading: ' + rocketReadingCount;
-            
-            const tempEl = document.getElementById('rocketTempValue');
-            const pressureEl = document.getElementById('rocketPressureValue');
-            const thrustEl = document.getElementById('rocketThrustValue');
-            const statusEl = document.getElementById('rocketStatusValue');
-            
-            tempEl.className = 'demo-stat-value ' + (temp > 100 ? 'danger' : 'safe');
-            pressureEl.className = 'demo-stat-value ' + (pressure > 5 ? 'danger' : 'safe');
-            thrustEl.className = 'demo-stat-value ' + ((thrust < 500 || thrust > 3000) ? 'warning' : 'safe');
-            statusEl.className = 'demo-stat-value ' + (status.includes('ALERT') ? 'danger' : 'safe');
-        }
-
-        function generateRocketReading() {
-            const temp = 20 + Math.random() * 80 + (Math.random() < 0.05 ? 20 + Math.random() * 30 : 0);
-            const pressure = 1 + Math.random() * 4 + (Math.random() < 0.05 ? 1 + Math.random() * 3 : 0);
-            const thrust = 800 + Math.random() * 1500 + (Math.random() < 0.05 ? (Math.random() > 0.5 ? 1000 : -400) : 0);
-            return { temp, pressure, thrust };
-        }
-
-        function checkRocketSafety(temp, pressure, thrust) {
-            const issues = [];
-            if (temp > 100) issues.push('OVERHEATING');
-            if (pressure > 5) issues.push('OVERPRESSURE');
-            if (thrust < 500 || thrust > 3000) issues.push('THRUST_ANOMALY');
-            return issues;
-        }
-
-        function runRocketStep() {
-            if (!rocketIsRunning) return;
-            
-            rocketReadingCount++;
-            const { temp, pressure, thrust } = generateRocketReading();
-            const issues = checkRocketSafety(temp, pressure, thrust);
-            let status = 'NOMINAL';
-            
-            if (issues.length > 0) {
-                status = 'ALERT: ' + issues.join(', ');
-                if (issues.includes('OVERHEATING')) {
-                    logRocket('🔥 ALERT: Overheating! Temp: ' + temp.toFixed(1) + '°C');
+                for (let i = 0; i < 100; i++) {
+                    const anomaly = Math.random() < 0.05;
+                    let temp = anomaly ? 110 + Math.random() * 40 : Math.max(0, Math.min(100, 50 + (Math.random() - 0.5) * 30));
+                    let pressure = anomaly ? 6 + Math.random() * 2 : Math.max(0, Math.min(5, 3 + (Math.random() - 0.5) * 2));
+                    let thrust = anomaly ? 2100 + Math.random() * 400 : Math.max(0, Math.min(2000, 1000 + (Math.random() - 0.5) * 400));
+                    
+                    this.sensorData.push({
+                        temperature: parseFloat(temp.toFixed(1)),
+                        pressure: parseFloat(pressure.toFixed(1)),
+                        thrust: parseFloat(thrust.toFixed(1))
+                    });
                 }
-                if (issues.includes('OVERPRESSURE')) {
-                    logRocket('💥 ALERT: Overpressure! Pressure: ' + pressure.toFixed(1) + ' bar');
-                }
-                if (temp > 120 || pressure > 7) {
-                    logRocket('🚨 CRITICAL - Emergency stop initiated');
-                    emergencyRocketStop();
+                
+                this.log('✓ Generated ' + this.sensorData.length + ' sensor readings');
+                document.getElementById('testTotalCount').textContent = this.sensorData.length;
+            },
+
+            runValidation() {
+                if (this.sensorData.length === 0) {
+                    this.log('⚠ No data to validate');
                     return;
                 }
+
+                this.log('> Starting validation...');
+                
+                let validCount = 0, anomalyCount = 0;
+                let tempSum = 0, pressureSum = 0, thrustSum = 0;
+
+                this.sensorData.forEach(data => {
+                    const tempValid = data.temperature >= 0 && data.temperature <= 100;
+                    const pressureValid = data.pressure >= 0 && data.pressure <= 5;
+                    const thrustValid = data.thrust >= 0 && data.thrust <= 2000;
+                    const isValid = tempValid && pressureValid && thrustValid;
+                    
+                    if (isValid) validCount++;
+                    else anomalyCount++;
+                    
+                    tempSum += data.temperature;
+                    pressureSum += data.pressure;
+                    thrustSum += data.thrust;
+                });
+
+                document.getElementById('testValidCount').textContent = validCount;
+                document.getElementById('testAnomalyCount').textContent = anomalyCount;
+                document.getElementById('testAvgTemp').textContent = (tempSum / this.sensorData.length).toFixed(1);
+
+                this.log('✓ Validation complete');
+                this.log('Test Report:');
+                this.log(validCount + '/' + this.sensorData.length + ' sensors valid');
+                this.log('Avg Temp: ' + (tempSum / this.sensorData.length).toFixed(2) + ' °C');
+                this.log('Avg Pressure: ' + (pressureSum / this.sensorData.length).toFixed(3) + ' bar');
+                this.log('Avg Thrust: ' + (thrustSum / this.sensorData.length).toFixed(2) + ' kN');
+                this.log('Anomalies: ' + anomalyCount);
+            },
+
+            reset() {
+                this.log('> Resetting test stand...');
+                this.sensorData = [];
+                
+                ['testValidCount', 'testTotalCount', 'testAnomalyCount', 'testAvgTemp'].forEach(id => {
+                    document.getElementById(id).textContent = '-';
+                });
+                
+                this.log('✓ Reset complete, ready for new test run');
             }
-            
-            updateRocketDisplay(temp, pressure, thrust, status);
-            logRocket('Reading ' + rocketReadingCount + ': ' + temp.toFixed(1) + '°C, ' + pressure.toFixed(1) + ' bar, ' + thrust.toFixed(0) + ' N' + (status !== 'NOMINAL' ? ' - ' + status : ''));
-        }
+        };
 
-        function startRocketTest() {
-            rocketIsRunning = true;
-            rocketReadingCount = 0;
-            document.getElementById('rocketStartBtn').disabled = true;
-            document.getElementById('rocketStopBtn').disabled = false;
-            document.getElementById('rocketEmergencyBtn').disabled = false;
-            
-            logRocket('🚀 Starting rocket test simulation...');
-            rocketInterval = setInterval(runRocketStep, 1000);
-        }
+        // Rocket Simulator Module
+        const rocketSim = {
+            isRunning: false,
+            readingCount: 0,
+            interval: null,
 
-        function stopRocketTest() {
-            rocketIsRunning = false;
-            clearInterval(rocketInterval);
-            document.getElementById('rocketStartBtn').disabled = false;
-            document.getElementById('rocketStopBtn').disabled = true;
-            document.getElementById('rocketEmergencyBtn').disabled = true;
-            
-            logRocket('⏹️ Test stopped. Readings: ' + rocketReadingCount);
-        }
+            log(msg) {
+                const output = document.getElementById('rocketOutput');
+                const timestamp = new Date().toLocaleTimeString();
+                output.textContent += '\n[' + timestamp + '] ' + msg;
+                output.scrollTop = output.scrollHeight;
+            },
 
-        function emergencyRocketStop() {
-            rocketIsRunning = false;
-            clearInterval(rocketInterval);
-            document.getElementById('rocketStartBtn').disabled = false;
-            document.getElementById('rocketStopBtn').disabled = true;
-            document.getElementById('rocketEmergencyBtn').disabled = true;
-            
-            logRocket('🚨 EMERGENCY STOP ACTIVATED');
-            logRocket('⚠️ All systems shut down for safety');
-        }
+            updateDisplay(temp, pressure, thrust, status) {
+                document.getElementById('rocketTempValue').textContent = temp.toFixed(1);
+                document.getElementById('rocketPressureValue').textContent = pressure.toFixed(1);
+                document.getElementById('rocketThrustValue').textContent = Math.round(thrust);
+                document.getElementById('rocketStatusValue').textContent = status;
+                document.getElementById('rocketReadingCount').textContent = 'Reading: ' + this.readingCount;
+                
+                const tempEl = document.getElementById('rocketTempValue');
+                const pressureEl = document.getElementById('rocketPressureValue');
+                const thrustEl = document.getElementById('rocketThrustValue');
+                const statusEl = document.getElementById('rocketStatusValue');
+                
+                tempEl.className = 'demo-stat-value ' + (temp > 100 ? 'danger' : 'safe');
+                pressureEl.className = 'demo-stat-value ' + (pressure > 5 ? 'danger' : 'safe');
+                thrustEl.className = 'demo-stat-value ' + ((thrust < 500 || thrust > 3000) ? 'warning' : 'safe');
+                statusEl.className = 'demo-stat-value ' + (status.includes('ALERT') ? 'danger' : 'safe');
+            },
 
-        function resetRocketTest() {
-            stopRocketTest();
-            rocketReadingCount = 0;
-            updateRocketDisplay(25, 1.0, 0, 'READY');
-            document.getElementById('rocketOutput').innerHTML = '<div class="reading-count" id="rocketReadingCount">Reading: 0</div>Rocket Test Simulator v1.0\nSystem reset and ready.\n\nSafety thresholds:\n- Temperature: 0-100°C\n- Pressure: 0-5.0 bar\n- Thrust: 500-3000 N\n\nPress Start to begin simulation...';
-        }
+            generateReading() {
+                const temp = 20 + Math.random() * 80 + (Math.random() < 0.05 ? 20 + Math.random() * 30 : 0);
+                const pressure = 1 + Math.random() * 4 + (Math.random() < 0.05 ? 1 + Math.random() * 3 : 0);
+                const thrust = 800 + Math.random() * 1500 + (Math.random() < 0.05 ? (Math.random() > 0.5 ? 1000 : -400) : 0);
+                return { temp, pressure, thrust };
+            },
+
+            checkSafety(temp, pressure, thrust) {
+                const issues = [];
+                if (temp > 100) issues.push('OVERHEATING');
+                if (pressure > 5) issues.push('OVERPRESSURE');
+                if (thrust < 500 || thrust > 3000) issues.push('THRUST_ANOMALY');
+                return issues;
+            },
+
+            runStep() {
+                if (!this.isRunning) return;
+                
+                this.readingCount++;
+                const { temp, pressure, thrust } = this.generateReading();
+                const issues = this.checkSafety(temp, pressure, thrust);
+                let status = 'NOMINAL';
+                
+                if (issues.length > 0) {
+                    status = 'ALERT: ' + issues.join(', ');
+                    if (issues.includes('OVERHEATING')) {
+                        this.log('🔥 ALERT: Overheating! Temp: ' + temp.toFixed(1) + '°C');
+                    }
+                    if (issues.includes('OVERPRESSURE')) {
+                        this.log('💥 ALERT: Overpressure! Pressure: ' + pressure.toFixed(1) + ' bar');
+                    }
+                    if (temp > 120 || pressure > 7) {
+                        this.log('🚨 CRITICAL - Emergency stop initiated');
+                        this.emergencyStop();
+                        return;
+                    }
+                }
+                
+                this.updateDisplay(temp, pressure, thrust, status);
+                this.log('Reading ' + this.readingCount + ': ' + temp.toFixed(1) + '°C, ' + pressure.toFixed(1) + ' bar, ' + thrust.toFixed(0) + ' N' + (status !== 'NOMINAL' ? ' - ' + status : ''));
+            },
+
+            start() {
+                this.isRunning = true;
+                this.readingCount = 0;
+                document.getElementById('rocketStartBtn').disabled = true;
+                document.getElementById('rocketStopBtn').disabled = false;
+                document.getElementById('rocketEmergencyBtn').disabled = false;
+                
+                this.log('🚀 Starting rocket test simulation...');
+                this.interval = setInterval(() => this.runStep(), 1000);
+            },
+
+            stop() {
+                this.isRunning = false;
+                clearInterval(this.interval);
+                document.getElementById('rocketStartBtn').disabled = false;
+                document.getElementById('rocketStopBtn').disabled = true;
+                document.getElementById('rocketEmergencyBtn').disabled = true;
+                
+                this.log('⏹️ Test stopped. Readings: ' + this.readingCount);
+            },
+
+            emergencyStop() {
+                this.isRunning = false;
+                clearInterval(this.interval);
+                document.getElementById('rocketStartBtn').disabled = false;
+                document.getElementById('rocketStopBtn').disabled = true;
+                document.getElementById('rocketEmergencyBtn').disabled = true;
+                
+                this.log('🚨 EMERGENCY STOP ACTIVATED');
+                this.log('⚠️ All systems shut down for safety');
+            },
+
+            reset() {
+                this.stop();
+                this.readingCount = 0;
+                this.updateDisplay(25, 1.0, 0, 'READY');
+                document.getElementById('rocketOutput').innerHTML = '<div class="reading-count" id="rocketReadingCount">Reading: 0</div>Rocket Test Simulator v1.0\nSystem reset and ready.\n\nSafety thresholds:\n- Temperature: 0-100°C\n- Pressure: 0-5.0 bar\n- Thrust: 500-3000 N\n\nPress Start to begin simulation...';
+            }
+        };
     </script>
 </body>
-</html>"
+</html>
