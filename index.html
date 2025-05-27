@@ -206,59 +206,93 @@
             .tech-grid { gap: 20px; }
         }
         
-        /* Demo placeholder styles */
-        .demo-placeholder {
+        /* Demo styles */
+        .demo-container {
             height: 100%;
-            background: #111;
+            background: #000;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #333;
-        }
-        
-        .placeholder-content {
-            text-align: center;
-            padding: 40px;
-            max-width: 400px;
-        }
-        
-        .placeholder-content h4 {
-            color: #fff;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        
-        .placeholder-content p {
-            color: #999;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .placeholder-features {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        
-        .placeholder-features div {
-            color: #ccc;
-            font-size: 0.85rem;
-            margin-bottom: 5px;
+            flex-direction: column;
             font-family: 'Courier New', monospace;
         }
         
-        .placeholder-note {
-            background: rgba(255, 255, 255, 0.05);
+        .demo-controls {
+            display: flex;
+            gap: 8px;
             padding: 15px;
-            border: 1px solid #333;
-            font-size: 0.8rem;
-            color: #999;
-            line-height: 1.4;
+            border-bottom: 1px solid #333;
+            flex-wrap: wrap;
         }
         
-        .placeholder-note strong {
-            color: #fff;
+        .demo-btn {
+            background: #333;
+            color: #00ff00;
+            border: 1px solid #555;
+            padding: 8px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
+        
+        .demo-btn:hover { background: #555; }
+        .demo-btn:disabled { background: #222; color: #666; cursor: not-allowed; }
+        .demo-btn.danger { background: #660000; color: #ff6666; }
+        .demo-btn.danger:hover { background: #880000; }
+        
+        .demo-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            padding: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .demo-stat {
+            text-align: center;
+            padding: 8px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #333;
+        }
+        
+        .demo-stat-value {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #00ff00;
+        }
+        
+        .demo-stat-label {
+            font-size: 10px;
+            color: #999;
+            text-transform: uppercase;
+        }
+        
+        .demo-terminal {
+            flex: 1;
+            background: #111;
+            padding: 15px;
+            overflow-y: auto;
+            font-size: 11px;
+            line-height: 1.4;
+            color: #00ff00;
+            white-space: pre-line;
+            position: relative;
+        }
+        
+        .reading-count {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 204, 255, 0.2);
+            padding: 4px 8px;
+            font-size: 10px;
+            color: #00ccff;
+            border-radius: 3px;
+        }
+        
+        .safe { color: #51cf66; }
+        .warning { color: #ffd43b; }
+        .danger { color: #ff6b6b; }
     </style>
 </head>
 <body>
@@ -306,20 +340,41 @@
                         <p>C++ console application for rocket engine sensor validation</p>
                     </div>
                     <div class="project-demo">
-                        <div class="demo-placeholder">
-                            <div class="placeholder-content">
-                                <h4>🚀 Test Stand Automation Tool Demo</h4>
-                                <p>Interactive C++ console simulation</p>
-                                <div class="placeholder-features">
-                                    <div>• CSV data processing</div>
-                                    <div>• Parallel validation</div>
-                                    <div>• Real-time reporting</div>
-                                    <div>• Safety thresholds</div>
+                        <div class="demo-container" id="testStandDemo">
+                            <div class="demo-controls">
+                                <button class="demo-btn" onclick="generateTestData()">Generate Data</button>
+                                <button class="demo-btn" onclick="runTestValidation()">Run Validation</button>
+                                <button class="demo-btn" onclick="resetTestSystem()">Reset</button>
+                            </div>
+                            
+                            <div class="demo-stats">
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value" id="testValidCount">-</div>
+                                    <div class="demo-stat-label">Valid</div>
                                 </div>
-                                <div class="placeholder-note">
-                                    <strong>Demo Features:</strong> Generate sensor data, validate thresholds, view results in terminal interface
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value" id="testTotalCount">-</div>
+                                    <div class="demo-stat-label">Total</div>
+                                </div>
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value" id="testAnomalyCount">-</div>
+                                    <div class="demo-stat-label">Anomalies</div>
+                                </div>
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value" id="testAvgTemp">-</div>
+                                    <div class="demo-stat-label">Avg °C</div>
                                 </div>
                             </div>
+                            
+                            <div class="demo-terminal" id="testOutput">Test Stand Automation Tool v1.0
+Ready for sensor data validation...
+
+Thresholds:
+- Temperature: 0-100°C
+- Pressure: 0-5 bar  
+- Thrust: 0-2000 kN
+
+Generate sample data to begin testing.</div>
                         </div>
                     </div>
                 </div>
@@ -331,19 +386,44 @@
                         <p>Real-time engine monitoring with safety protocols</p>
                     </div>
                     <div class="project-demo">
-                        <div class="demo-placeholder">
-                            <div class="placeholder-content">
-                                <h4>🚀 Rocket Test Simulator Demo</h4>
-                                <p>Real-time engine monitoring simulation</p>
-                                <div class="placeholder-features">
-                                    <div>• Live sensor readings</div>
-                                    <div>• Safety monitoring</div>
-                                    <div>• Emergency protocols</div>
-                                    <div>• Real-time alerts</div>
+                        <div class="demo-container" id="rocketSimDemo">
+                            <div class="demo-controls">
+                                <button class="demo-btn" id="rocketStartBtn" onclick="startRocketTest()">🚀 Start</button>
+                                <button class="demo-btn" id="rocketStopBtn" onclick="stopRocketTest()" disabled>⏹️ Stop</button>
+                                <button class="demo-btn danger" id="rocketEmergencyBtn" onclick="emergencyRocketStop()" disabled>🚨 Emergency</button>
+                                <button class="demo-btn" onclick="resetRocketTest()">🔄 Reset</button>
+                            </div>
+                            
+                            <div class="demo-stats">
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value safe" id="rocketTempValue">25.0</div>
+                                    <div class="demo-stat-label">Temp (°C)</div>
                                 </div>
-                                <div class="placeholder-note">
-                                    <strong>Demo Features:</strong> Start test sequence, monitor telemetry, trigger safety systems
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value safe" id="rocketPressureValue">1.0</div>
+                                    <div class="demo-stat-label">Pressure</div>
                                 </div>
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value safe" id="rocketThrustValue">0</div>
+                                    <div class="demo-stat-label">Thrust (N)</div>
+                                </div>
+                                <div class="demo-stat">
+                                    <div class="demo-stat-value safe" id="rocketStatusValue">READY</div>
+                                    <div class="demo-stat-label">Status</div>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-terminal" id="rocketOutput">
+                                <div class="reading-count" id="rocketReadingCount">Reading: 0</div>
+Rocket Test Simulator v1.0
+System ready for testing.
+
+Safety thresholds:
+- Temperature: 0-100°C  
+- Pressure: 0-5.0 bar
+- Thrust: 500-3000 N
+
+Press Start to begin simulation...
                             </div>
                         </div>
                     </div> 12px; 
@@ -543,5 +623,197 @@ Press Start to begin simulation...
             <p>© 2025 Joe Bruechner • Software Engineer</p>
         </footer>
     </div>
+
+    <script>
+        // Test Stand Demo JavaScript
+        let testSensorData = [];
+        
+        function logTest(msg) {
+            const output = document.getElementById('testOutput');
+            output.textContent += '\n' + msg;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function generateTestData() {
+            logTest('> Generating 100 sensor readings...');
+            testSensorData = [];
+            
+            for (let i = 0; i < 100; i++) {
+                const anomaly = Math.random() < 0.05;
+                let temp = anomaly ? 110 + Math.random() * 40 : Math.max(0, Math.min(100, 50 + (Math.random() - 0.5) * 30));
+                let pressure = anomaly ? 6 + Math.random() * 2 : Math.max(0, Math.min(5, 3 + (Math.random() - 0.5) * 2));
+                let thrust = anomaly ? 2100 + Math.random() * 400 : Math.max(0, Math.min(2000, 1000 + (Math.random() - 0.5) * 400));
+                
+                testSensorData.push({
+                    temperature: parseFloat(temp.toFixed(1)),
+                    pressure: parseFloat(pressure.toFixed(1)),
+                    thrust: parseFloat(thrust.toFixed(1))
+                });
+            }
+            
+            logTest('✓ Generated ' + testSensorData.length + ' sensor readings');
+            document.getElementById('testTotalCount').textContent = testSensorData.length;
+        }
+
+        function runTestValidation() {
+            if (testSensorData.length === 0) {
+                logTest('⚠ No data to validate');
+                return;
+            }
+
+            logTest('> Starting validation...');
+            
+            let validCount = 0, anomalyCount = 0;
+            let tempSum = 0, pressureSum = 0, thrustSum = 0;
+
+            testSensorData.forEach(data => {
+                const tempValid = data.temperature >= 0 && data.temperature <= 100;
+                const pressureValid = data.pressure >= 0 && data.pressure <= 5;
+                const thrustValid = data.thrust >= 0 && data.thrust <= 2000;
+                const isValid = tempValid && pressureValid && thrustValid;
+                
+                if (isValid) validCount++;
+                else anomalyCount++;
+                
+                tempSum += data.temperature;
+                pressureSum += data.pressure;
+                thrustSum += data.thrust;
+            });
+
+            document.getElementById('testValidCount').textContent = validCount;
+            document.getElementById('testAnomalyCount').textContent = anomalyCount;
+            document.getElementById('testAvgTemp').textContent = (tempSum / testSensorData.length).toFixed(1);
+
+            logTest('✓ Validation complete');
+            logTest('Test Report:');
+            logTest(validCount + '/' + testSensorData.length + ' sensors valid');
+            logTest('Avg Temp: ' + (tempSum / testSensorData.length).toFixed(2) + ' °C');
+            logTest('Avg Pressure: ' + (pressureSum / testSensorData.length).toFixed(3) + ' bar');
+            logTest('Avg Thrust: ' + (thrustSum / testSensorData.length).toFixed(2) + ' kN');
+            logTest('Anomalies: ' + anomalyCount);
+        }
+
+        function resetTestSystem() {
+            logTest('> Resetting test stand...');
+            testSensorData = [];
+            
+            ['testValidCount', 'testTotalCount', 'testAnomalyCount', 'testAvgTemp'].forEach(id => {
+                document.getElementById(id).textContent = '-';
+            });
+            
+            logTest('✓ Reset complete, ready for new test run');
+        }
+
+        // Rocket Simulator Demo JavaScript
+        let rocketIsRunning = false;
+        let rocketReadingCount = 0;
+        let rocketInterval;
+
+        function logRocket(msg) {
+            const output = document.getElementById('rocketOutput');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += '\n[' + timestamp + '] ' + msg;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function updateRocketDisplay(temp, pressure, thrust, status) {
+            document.getElementById('rocketTempValue').textContent = temp.toFixed(1);
+            document.getElementById('rocketPressureValue').textContent = pressure.toFixed(1);
+            document.getElementById('rocketThrustValue').textContent = Math.round(thrust);
+            document.getElementById('rocketStatusValue').textContent = status;
+            document.getElementById('rocketReadingCount').textContent = 'Reading: ' + rocketReadingCount;
+            
+            const tempEl = document.getElementById('rocketTempValue');
+            const pressureEl = document.getElementById('rocketPressureValue');
+            const thrustEl = document.getElementById('rocketThrustValue');
+            const statusEl = document.getElementById('rocketStatusValue');
+            
+            tempEl.className = 'demo-stat-value ' + (temp > 100 ? 'danger' : 'safe');
+            pressureEl.className = 'demo-stat-value ' + (pressure > 5 ? 'danger' : 'safe');
+            thrustEl.className = 'demo-stat-value ' + ((thrust < 500 || thrust > 3000) ? 'warning' : 'safe');
+            statusEl.className = 'demo-stat-value ' + (status.includes('ALERT') ? 'danger' : 'safe');
+        }
+
+        function generateRocketReading() {
+            const temp = 20 + Math.random() * 80 + (Math.random() < 0.05 ? 20 + Math.random() * 30 : 0);
+            const pressure = 1 + Math.random() * 4 + (Math.random() < 0.05 ? 1 + Math.random() * 3 : 0);
+            const thrust = 800 + Math.random() * 1500 + (Math.random() < 0.05 ? (Math.random() > 0.5 ? 1000 : -400) : 0);
+            return { temp, pressure, thrust };
+        }
+
+        function checkRocketSafety(temp, pressure, thrust) {
+            const issues = [];
+            if (temp > 100) issues.push('OVERHEATING');
+            if (pressure > 5) issues.push('OVERPRESSURE');
+            if (thrust < 500 || thrust > 3000) issues.push('THRUST_ANOMALY');
+            return issues;
+        }
+
+        function runRocketStep() {
+            if (!rocketIsRunning) return;
+            
+            rocketReadingCount++;
+            const { temp, pressure, thrust } = generateRocketReading();
+            const issues = checkRocketSafety(temp, pressure, thrust);
+            let status = 'NOMINAL';
+            
+            if (issues.length > 0) {
+                status = 'ALERT: ' + issues.join(', ');
+                if (issues.includes('OVERHEATING')) {
+                    logRocket('🔥 ALERT: Overheating! Temp: ' + temp.toFixed(1) + '°C');
+                }
+                if (issues.includes('OVERPRESSURE')) {
+                    logRocket('💥 ALERT: Overpressure! Pressure: ' + pressure.toFixed(1) + ' bar');
+                }
+                if (temp > 120 || pressure > 7) {
+                    logRocket('🚨 CRITICAL - Emergency stop initiated');
+                    emergencyRocketStop();
+                    return;
+                }
+            }
+            
+            updateRocketDisplay(temp, pressure, thrust, status);
+            logRocket('Reading ' + rocketReadingCount + ': ' + temp.toFixed(1) + '°C, ' + pressure.toFixed(1) + ' bar, ' + thrust.toFixed(0) + ' N' + (status !== 'NOMINAL' ? ' - ' + status : ''));
+        }
+
+        function startRocketTest() {
+            rocketIsRunning = true;
+            rocketReadingCount = 0;
+            document.getElementById('rocketStartBtn').disabled = true;
+            document.getElementById('rocketStopBtn').disabled = false;
+            document.getElementById('rocketEmergencyBtn').disabled = false;
+            
+            logRocket('🚀 Starting rocket test simulation...');
+            rocketInterval = setInterval(runRocketStep, 1000);
+        }
+
+        function stopRocketTest() {
+            rocketIsRunning = false;
+            clearInterval(rocketInterval);
+            document.getElementById('rocketStartBtn').disabled = false;
+            document.getElementById('rocketStopBtn').disabled = true;
+            document.getElementById('rocketEmergencyBtn').disabled = true;
+            
+            logRocket('⏹️ Test stopped. Readings: ' + rocketReadingCount);
+        }
+
+        function emergencyRocketStop() {
+            rocketIsRunning = false;
+            clearInterval(rocketInterval);
+            document.getElementById('rocketStartBtn').disabled = false;
+            document.getElementById('rocketStopBtn').disabled = true;
+            document.getElementById('rocketEmergencyBtn').disabled = true;
+            
+            logRocket('🚨 EMERGENCY STOP ACTIVATED');
+            logRocket('⚠️ All systems shut down for safety');
+        }
+
+        function resetRocketTest() {
+            stopRocketTest();
+            rocketReadingCount = 0;
+            updateRocketDisplay(25, 1.0, 0, 'READY');
+            document.getElementById('rocketOutput').innerHTML = '<div class="reading-count" id="rocketReadingCount">Reading: 0</div>Rocket Test Simulator v1.0\nSystem reset and ready.\n\nSafety thresholds:\n- Temperature: 0-100°C\n- Pressure: 0-5.0 bar\n- Thrust: 500-3000 N\n\nPress Start to begin simulation...';
+        }
+    </script>
 </body>
 </html>"
